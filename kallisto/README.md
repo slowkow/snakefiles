@@ -35,38 +35,6 @@ snakemake \
   --cluster 'bsub -q normal -R "rusage[mem=4000]"'
 ```
 
-```
-Provided cluster nodes: 999
-Job counts:
-        count   jobs
-        1       all
-        1       collate_kallisto
-        1       kallisto_index
-        2       kallisto_quant
-        5
-rule kallisto_index:
-        input: ../data/ensembl/Homo_sapiens.GRCh38.cdna.all.fa
-        output: ../data/ensembl/kallisto/Homo_sapiens.GRCh38.cdna.all
-        log: ../data/ensembl/kallisto/kallisto.index.log
-        benchmark: ../data/ensembl/kallisto/kallisto.index.benchmark.tsv
-1 of 5 steps (20%) done
-rule kallisto_quant:
-        input: ../data/ensembl/kallisto/Homo_sapiens.GRCh38.cdna.all, ../data/fastq/Sample2.R2.fastq.gz, ../data/fastq/Sample2.R1.fastq.gz
-        output: ./Sample2/abundance.tsv
-rule kallisto_quant:
-        input: ../data/ensembl/kallisto/Homo_sapiens.GRCh38.cdna.all, ../data/fastq/Sample1.R2.fastq.gz, ../data/fastq/Sample1.R1.fastq.gz
-        output: ./Sample1/abundance.tsv
-2 of 5 steps (40%) done
-3 of 5 steps (60%) done
-rule collate_kallisto:
-        input: ./Sample2/abundance.tsv, ./Sample1/abundance.tsv
-        output: abundance.tsv.gz
-4 of 5 steps (80%) done
-localrule all:
-        input: abundance.tsv.gz
-5 of 5 steps (100%) done
-```
-
 ## Output
 
 The collated output looks like this:
