@@ -1,4 +1,4 @@
-# star.snakefile
+# star_express.snakefile
 
 Execute a multi-sample 2-pass [STAR] alignment, sharing the splice junctions
 across samples. Count fragments per gene and fragments per splice site. Also
