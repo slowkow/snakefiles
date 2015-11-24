@@ -36,57 +36,6 @@ snakemake \
   --cluster 'bsub -q big-multi -n 16 -R "rusage[mem=35000]"'
 ```
 
-```
-Provided cluster nodes: 999
-Job counts:
-        count   jobs
-        1       all
-        1       collate_counts
-        1       collate_junctions
-        2       star_pass1
-        2       star_pass2
-        7
-rule star_pass1:
-        input: /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/ensembl/star, /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf
-        output: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass1/SJ.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample2/pass1/Aligned.out.sam
-        log: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass1/star.map.log
-        benchmark: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass1/star.map.benchmark.tsv
-rule star_pass1:
-        input: /data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R1.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R2.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/ensembl/star, /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf
-        output: /data/srlab/slowikow/src/snakefiles/star/Sample1/pass1/SJ.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass1/Aligned.out.sam
-        log: /data/srlab/slowikow/src/snakefiles/star/Sample1/pass1/star.map.log
-        benchmark: /data/srlab/slowikow/src/snakefiles/star/Sample1/pass1/star.map.benchmark.tsv
-Removing temporary output file /data/srlab/slowikow/src/snakefiles/star/Sample1/pass1/Aligned.out.sam.
-1 of 7 steps (14%) done
-Removing temporary output file /data/srlab/slowikow/src/snakefiles/star/Sample2/pass1/Aligned.out.sam.
-2 of 7 steps (29%) done
-rule star_pass2:
-        input: /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/ensembl/star, /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf, /data/srlab/slowikow/src/snakefiles/star/Sample2/pass1/SJ.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass1/SJ.out.tab
-        output: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/SJ.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/ReadsPerGene.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/Aligned.out.bam, /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/Aligned.out.sam
-        log: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/star.map.log
-        benchmark: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/star.map.benchmark.tsv
-rule star_pass2:
-        input: /data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R1.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R2.fastq.gz, /data/srlab/slowikow/src/snakefiles/data/ensembl/star, /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf, /data/srlab/slowikow/src/snakefiles/star/Sample2/pass1/SJ.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass1/SJ.out.tab
-        output: /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/SJ.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/ReadsPerGene.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/Aligned.out.bam, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/Aligned.out.sam
-        log: /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/star.map.log
-        benchmark: /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/star.map.benchmark.tsv
-Removing temporary output file /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/Aligned.out.sam.
-3 of 7 steps (43%) done
-Removing temporary output file /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/Aligned.out.sam.
-4 of 7 steps (57%) done
-rule collate_junctions:
-        input: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/SJ.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/SJ.out.tab
-        output: junctions.tsv.gz
-rule collate_counts:
-        input: /data/srlab/slowikow/src/snakefiles/star/Sample2/pass2/ReadsPerGene.out.tab, /data/srlab/slowikow/src/snakefiles/star/Sample1/pass2/ReadsPerGene.out.tab
-        output: counts.tsv.gz
-5 of 7 steps (71%) done
-6 of 7 steps (86%) done
-localrule all:
-        input: counts.tsv.gz, junctions.tsv.gz
-7 of 7 steps (100%) done
-```
-
 ## Output
 
 The collated output looks like this:
