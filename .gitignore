@@ -1,0 +1,4 @@
+data/ensembl/
+.snakemake/
+gmon.out
+_STARgenome/
