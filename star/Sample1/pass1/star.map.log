@@ -1,0 +1,6 @@
+Nov 23 18:01:12 ..... Started STAR run
+Nov 23 18:01:12 ..... Loading genome
+Nov 23 18:02:12 ..... Processing annotations GTF
+Nov 23 18:02:27 ..... Inserting junctions into the genome indices
+Nov 23 18:10:28 ..... Started mapping
+Nov 23 18:10:29 ..... Finished successfully

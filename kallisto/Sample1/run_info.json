@@ -1,0 +1,9 @@
+{
+	"n_targets": 175372,
+	"n_bootstraps": 0,
+	"n_processed": 5000,
+	"kallisto_version": "0.42.4",
+	"index_version": 10,
+	"start_time": "Mon Nov 23 17:26:37 2015",
+	"call": "kallisto quant --threads=1 --index=../data/ensembl/kallisto/Homo_sapiens.GRCh38.cdna.all --output-dir=./Sample1 ../data/fastq/Sample1.R1.fastq.gz ../data/fastq/Sample1.R2.fastq.gz"
+}
