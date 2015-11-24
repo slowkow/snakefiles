@@ -28,8 +28,19 @@ across samples. Count fragments per gene and fragments per splice site.
 Collate outputs from multiple samples.
 
 
+### [star_express/][3]
+
+[3]: https://github.com/slowkow/snakefiles/tree/master/star_express
+
+Execute a multi-sample 2-pass [STAR] alignment, sharing the splice junctions
+across samples. Count fragments per gene and fragments per splice site. Also
+produce a BAM file with coordinates relative to transcripts. Quantify
+transcripts in TPM with [eXpress]. Collate outputs from multiple samples.
+
+
 [kallisto]: https://github.com/pachterlab/kallisto
 [STAR]: https://github.com/alexdobin/STAR
+[eXpress]: http://bio.math.berkeley.edu/eXpress/overview.html
 [cc0]: https://creativecommons.org/publicdomain/zero/1.0/
 
 [beginners]: http://slowkow.com/notes/snakemake-tutorial/
