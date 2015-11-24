@@ -95,9 +95,8 @@ rule star_index:
               ' > {log} 2>&1')
 
 # 1. Map paired-end RNA-seq reads to the genome.
-# 2. Make a coordinate sorted BAM with genomic coordinates.
-# 3. Count the number of reads mapped to each gene.
-# 4. Count the number of reads supporting each splice junction.
+# 2. Count the number of reads supporting each splice junction.
+# 3. Delete the output SAM file.
 rule star_pass1:
     input:
         r1 = join(FASTQ_DIR, PATTERN_R1),
