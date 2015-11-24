@@ -1,5 +1,11 @@
 # star.snakefile
 
+Execute a multi-sample 2-pass [STAR] alignment, sharing the splice junctions
+across samples. Count fragments per gene and fragments per splice site.
+Collate outputs from multiple samples.
+
+[STAR]: https://github.com/alexdobin/STAR
+
 ## View the job graph
 
 ```bash

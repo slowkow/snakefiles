@@ -1,5 +1,10 @@
 # kallisto.snakefile
 
+Quantify gene isoform expression in transcripts per million (TPM) with
+[kallisto] and collate outputs from multiple samples into one file.
+
+[kallisto]: https://github.com/pachterlab/kallisto
+
 ## View the job graph
 
 ```bash
