@@ -180,11 +180,8 @@ rule star_pass2:
               ' --readFilesCommand zcat'
               ' --readFilesIn {input.r1} {input.r2}'
               ' --sjdbFileChrStartEnd {input.sjs}'
-              # BAM file in transcript coords, in addition to genomic BAM file.
+              # Count fragments per gene, similar to HTseq.
               ' --quantMode GeneCounts'
-              # Basic 2-pass mapping, with all 1st pass junctions inserted
-              # into the genome indices on the fly.
-              ' --twopassMode Basic'
               # By default, this prefix is "./".
               ' --outFileNamePrefix ' + join(OUT_DIR, '{wildcards.sample}', 'pass2') + '/'
               #
