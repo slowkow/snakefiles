@@ -196,7 +196,8 @@ rule star_pass2:
     output:
         sam = temp(join(OUT_DIR, '{sample}', 'pass2', 'Aligned.out.sam')),
         bam = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.out.bam'),
-        transcriptome_bam = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.bam'),
+        t_bam = temp(join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.bam')),
+        t_bam_sorted = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.sorted.bam'),
         counts = join(OUT_DIR, '{sample}', 'pass2', 'ReadsPerGene.out.tab'),
         sj = join(OUT_DIR, '{sample}', 'pass2', 'SJ.out.tab')
     log:
@@ -249,11 +250,17 @@ rule star_pass2:
         # Convert to BAM and sort by coordinate.
         shell('samtools view -b {output.sam}'
               ' | samtools sort -@{threads} -l9 - ' + rstrip(output.bam, '.bam'))
+        # Sort by read name for eXpress.
+        shell('samtools sort -@{threads} -l9 -n'
+              ' -o {output.t_bam_sorted}'
+              ' -O bam'
+              ' -T ' + rstrip(output.t_bam, '.bam') +
+              ' {output.t_bam}')
 
 # Compute transcripts per million (TPM) with eXpress.
 rule express:
     input:
-        bam = rules.star_pass2.output.transcriptome_bam,
+        bam = rules.star_pass2.output.t_bam_sorted,
         cdna = rules.make_cdna.output.cdna
     output:
         results = join(OUT_DIR, '{sample}', 'pass2', 'results.xprs')
