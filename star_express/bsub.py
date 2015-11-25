@@ -9,6 +9,16 @@ chooses the queue that is least busy.
 Usage
 -----
 
+Add 'threads' and 'params' to your resource-intensive rules:
+
+    rule my_rule:
+        input: ...
+        output ...
+        threads: 4
+        params: mem='8000'
+
+Invoke snakemake with the path to this script:
+
     snakemake --cluster ./bsub.py [other options...]
 
 Note
