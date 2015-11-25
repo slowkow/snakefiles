@@ -35,7 +35,7 @@ snakemake \
   --snakefile star_express.snakefile \
   --configfile config.yml \
   --jobs 999 \
-  --cluster 'bsub -q big-multi -n 16 -R "rusage[mem=35000]"'
+  --cluster ./bsub.py
 ```
 
 ## Output

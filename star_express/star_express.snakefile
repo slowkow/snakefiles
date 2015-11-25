@@ -36,9 +36,6 @@ from subprocess import check_output
 # The config dictionary contains values defined in the JSON or YAML file
 # specified with 'snakemake --configfile'.
 
-# Run multi-threaded programs with this many threads.
-THREADS = config['THREADS']
-
 # Full path to an uncompressed FASTA file with all chromosome sequences.
 DNA = config['DNA']
 
@@ -119,7 +116,9 @@ rule star_index:
     version:
         STAR_VERSION
     threads:
-        THREADS
+        16
+    params:
+        mem = '40000'
     run:
         # Write stderr and stdout to the log file.
         shell('STAR'
@@ -148,7 +147,9 @@ rule star_pass1:
     version:
         STAR_VERSION
     threads:
-        THREADS
+        4
+    params:
+        mem = '40000'
     run:
         # Map reads with STAR.
         shell('cd ' + join(OUT_DIR, '{wildcards.sample}', 'pass1') +
@@ -207,7 +208,9 @@ rule star_pass2:
     version:
         STAR_VERSION
     threads:
-        THREADS
+        4
+    params:
+        mem = '40000'
     run:
         # Map reads with STAR.
         shell('cd ' + join(OUT_DIR, '{wildcards.sample}', 'pass2') +
@@ -270,6 +273,8 @@ rule express:
         join(OUT_DIR, '{sample}', 'pass2', 'express.benchmark.tsv')
     version:
         EXPRESS_VERSION 
+    params:
+        mem = '4000'
     run:
         shell('express'
               ' --no-update-check'

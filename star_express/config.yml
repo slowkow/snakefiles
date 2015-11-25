@@ -1,6 +1,3 @@
-# Run multi-threaded programs with this many threads.
-THREADS: 1
-
 # Path to an uncompressed FASTA file with all chromosome sequences.
 DNA: '/data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.dna.primary_assembly.fa'
 

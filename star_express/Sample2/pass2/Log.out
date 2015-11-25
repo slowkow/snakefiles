@@ -139,11 +139,11 @@ quantTranscriptomeBan             IndelSoftclipSingleend
 twopass1readsN                    18446744073709551615
 twopassMode                       None
 ##### Command Line:
-STAR --runThreadN 1 --genomeDir /data/srlab/slowikow/src/snakefiles/data/ensembl/star --sjdbGTFfile /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf --readFilesCommand zcat --readFilesIn /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz --sjdbFileChrStartEnd /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass1/SJ.out.tab /data/srlab/slowikow/src/snakefiles/star_express/Sample1/pass1/SJ.out.tab --quantMode TranscriptomeSAM GeneCounts --quantTranscriptomeBan Singleend --outFileNamePrefix /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass2/ --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --alignIntronMin 1 --alignIntronMax 1000000 --alignMatesGapMax 1000000
+STAR --runThreadN 4 --genomeDir /data/srlab/slowikow/src/snakefiles/data/ensembl/star --sjdbGTFfile /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf --readFilesCommand zcat --readFilesIn /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz --sjdbFileChrStartEnd /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass1/SJ.out.tab /data/srlab/slowikow/src/snakefiles/star_express/Sample1/pass1/SJ.out.tab --quantMode TranscriptomeSAM GeneCounts --quantTranscriptomeBan Singleend --outFileNamePrefix /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass2/ --outFilterMultimapNmax 20 --alignSJoverhangMin 8 --alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --alignIntronMin 1 --alignIntronMax 1000000 --alignMatesGapMax 1000000
 ##### Initial USER parameters from Command Line:
 outFileNamePrefix                 /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass2/
 ###### All USER parameters from Command Line:
-runThreadN                    1     ~RE-DEFINED
+runThreadN                    4     ~RE-DEFINED
 genomeDir                     /data/srlab/slowikow/src/snakefiles/data/ensembl/star     ~RE-DEFINED
 sjdbGTFfile                   /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf     ~RE-DEFINED
 readFilesCommand              zcat        ~RE-DEFINED
@@ -162,7 +162,7 @@ alignMatesGapMax              1000000     ~RE-DEFINED
 ##### Finished reading parameters from all sources
 
 ##### Final user re-defined parameters-----------------:
-runThreadN                        1
+runThreadN                        4
 genomeDir                         /data/srlab/slowikow/src/snakefiles/data/ensembl/star
 readFilesIn                       /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz   /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz   
 readFilesCommand                  zcat   
@@ -181,7 +181,7 @@ quantTranscriptomeBan             Singleend
 
 -------------------------------
 ##### Final effective command line:
-STAR   --runThreadN 1   --genomeDir /data/srlab/slowikow/src/snakefiles/data/ensembl/star   --readFilesIn /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz   /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz      --readFilesCommand zcat      --outFileNamePrefix /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass2/   --outFilterMultimapNmax 20   --outFilterMismatchNmax 999   --alignIntronMin 1   --alignIntronMax 1000000   --alignMatesGapMax 1000000   --alignSJoverhangMin 8   --alignSJDBoverhangMin 1   --sjdbFileChrStartEnd /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass1/SJ.out.tab   /data/srlab/slowikow/src/snakefiles/star_express/Sample1/pass1/SJ.out.tab      --sjdbGTFfile /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf   --quantMode TranscriptomeSAM   GeneCounts      --quantTranscriptomeBan Singleend
+STAR   --runThreadN 4   --genomeDir /data/srlab/slowikow/src/snakefiles/data/ensembl/star   --readFilesIn /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz   /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz      --readFilesCommand zcat      --outFileNamePrefix /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass2/   --outFilterMultimapNmax 20   --outFilterMismatchNmax 999   --alignIntronMin 1   --alignIntronMax 1000000   --alignMatesGapMax 1000000   --alignSJoverhangMin 8   --alignSJDBoverhangMin 1   --sjdbFileChrStartEnd /data/srlab/slowikow/src/snakefiles/star_express/Sample2/pass1/SJ.out.tab   /data/srlab/slowikow/src/snakefiles/star_express/Sample1/pass1/SJ.out.tab      --sjdbGTFfile /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf   --quantMode TranscriptomeSAM   GeneCounts      --quantTranscriptomeBan Singleend
 
 ##### Final parameters after user input--------------------------------:
 versionSTAR                       20201
@@ -189,7 +189,7 @@ versionGenome                     20101   20200
 parametersFiles                   -   
 sysShell                          -
 runMode                           alignReads
-runThreadN                        1
+runThreadN                        4
 runDirPerm                        User_RWX
 runRNGseed                        777
 genomeDir                         /data/srlab/slowikow/src/snakefiles/data/ensembl/star
@@ -553,7 +553,7 @@ Number of real (reference) chromosmes= 194
 192	KI270423.1	981	3137601536
 193	KI270392.1	971	3137863680
 194	KI270394.1	970	3138125824
-Started loading the genome: Tue Nov 24 11:01:38 2015
+Started loading the genome: Wed Nov 25 14:06:19 2015
 
 checking Genome sizefile size: 3138387968 bytes; state: good=1 eof=0 fail=0 bad=0
 checking SA sizefile size: 24303254806 bytes; state: good=1 eof=0 fail=0 bad=0
@@ -567,7 +567,7 @@ Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 3138387968 byt
 SA file size: 24303254806 bytes; state: good=1 eof=0 fail=0 bad=0
 Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 24303254806 bytes
 Loading SAindex ... done: 1565873619 bytes
-Finished loading the genome: Tue Nov 24 11:02:36 2015
+Finished loading the genome: Wed Nov 25 14:07:15 2015
 
 To accomodate alignIntronMax=1000000 redefined winBinNbits=18
 To accomodate alignIntronMax=1000000 and alignMatesGapMax=1000000, redefined winFlankNbins=4 and winAnchorDistNbins=8
@@ -575,30 +575,39 @@ Loaded database junctions from file: /data/srlab/slowikow/src/snakefiles/star_ex
 
 Loaded database junctions from file: /data/srlab/slowikow/src/snakefiles/star_express/Sample1/pass1/SJ.out.tab, total number of junctions: 1501 junctions
 
-Nov 24 11:02:36   Loaded database junctions from the sjdbFileChrStartEnd file(s), 1501 total junctions
+Nov 25 14:07:15   Loaded database junctions from the sjdbFileChrStartEnd file(s), 1501 total junctions
 
-Nov 24 11:02:36 ..... Processing annotations GTF
+Nov 25 14:07:15 ..... Processing annotations GTF
 Processing sjdbGTFfile=/data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf, found:
 		198634 transcripts
 		1172752 exons (non-collapsed)
 		347676 collapsed junctions
-Nov 24 11:02:49 ..... Finished GTF processing
-Nov 24 11:02:49   Loaded database junctions from the GTF file: /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf: 349177 total junctions
+Nov 25 14:07:28 ..... Finished GTF processing
+Nov 25 14:07:28   Loaded database junctions from the GTF file: /data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf: 349177 total junctions
 
 WARNING: long repeat for junction # 116387 : 15 88855522 88855578; left shift = 14; right shift = 255
 WARNING: long repeat for junction # 158658 : 18 46969610 47029116; left shift = 183; right shift = 255
-Nov 24 11:02:49   Finished preparing junctions
-Nov 24 11:02:49 ..... Inserting junctions into the genome indices
-Nov 24 11:08:47   Finished SA search: number of new junctions=347753, old junctions=0
-Nov 24 11:09:27   Finished sorting SA indicesL nInd=139101200
-Nov 24 11:10:32   Finished inserting junction indices
-Nov 24 11:10:54   Finished SAi
-Nov 24 11:10:54 ..... Finished inserting junctions into genome
+Nov 25 14:07:28   Finished preparing junctions
+Nov 25 14:07:28 ..... Inserting junctions into the genome indices
+Nov 25 14:08:57   Finished SA search: number of new junctions=347753, old junctions=0
+Nov 25 14:09:37   Finished sorting SA indicesL nInd=139101200
+Nov 25 14:10:42   Finished inserting junction indices
+Nov 25 14:11:03   Finished SAi
+Nov 25 14:11:03 ..... Finished inserting junctions into genome
 Loaded transcript database, nTr=198634
 Loaded exon database, nEx=1172752
+Created thread # 1
+Created thread # 2
+Created thread # 3
 Starting to map file # 0
 mate 1:   /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R1.fastq.gz
 mate 2:   /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.R2.fastq.gz
-Thread #0 end of input stream, nextChar=-1
+Thread #1 end of input stream, nextChar=-1
 Completed: thread #0
+Completed: thread #2
+Completed: thread #3
+Completed: thread #1
+Joined thread # 1
+Joined thread # 2
+Joined thread # 3
 ALL DONE!
