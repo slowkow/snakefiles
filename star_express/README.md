@@ -35,7 +35,7 @@ snakemake \
   --snakefile star_express.snakefile \
   --configfile config.yml \
   --jobs 999 \
-  --cluster ./bsub.py
+  --cluster ../bsub.py
 ```
 
 ## Output

@@ -19,7 +19,7 @@ Add 'threads' and 'params' to your resource-intensive rules:
 
 Invoke snakemake with the path to this script:
 
-    snakemake --cluster ./bsub.py [other options...]
+    snakemake --jobs 999 --cluster "./bsub.py -o bsub.stdout"
 
 Note
 ----
@@ -30,14 +30,20 @@ For your cluster at your institution, you'll have to modify this script.
 '''
 
 import os
-import sys
+import argparse
 
 from subprocess import check_output
 
 from snakemake.utils import read_job_properties
 
 def main():
-    jobscript = sys.argv[1]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("jobscript")
+    parser.add_argument("-e", help="Write bsub stderr here")
+    parser.add_argument("-o", help="Write bsub stdout here")
+    args = parser.parse_args()
+
+    jobscript = args.jobscript
 
     job_properties = read_job_properties(jobscript)
 
@@ -56,14 +62,18 @@ def main():
         queue = get_queue(threads, mem, runtime)
 
     # Submit the job to the queue.
-    run_bsub(queue, threads, mem, runtime, jobscript)
+    run_bsub(queue, threads, mem, runtime, jobscript, args.o, args.e)
 
-def run_bsub(queue, threads, mem, runtime, script):
+def run_bsub(queue, threads, mem, runtime, script, stdout, stderr):
     cmd = 'bsub -q {q} -n {t}'.format(q=queue, t=threads)
     if mem:
-        cmd += ' -R "rusage[mem={m}]"'.format(m=mem)
+        cmd += ' -R "rusage[mem={}]"'.format(mem)
     if runtime:
-        cmd += ' -W {r}'.format(r=runtime)
+        cmd += ' -W {}'.format(runtime)
+    if stdout:
+        cmd += ' -o {}'.format(stdout)
+    if stderr:
+        cmd += ' -e {}'.format(stderr)
     cmd += ' {s}'.format(s=script)
     return os.system(cmd)
 
@@ -88,9 +98,9 @@ def get_queue(threads, mem, runtime):
         retval.append('long')
     if threads <= 4 and mem < 4000 and runtime < 60 * 24 * 7 * 4:
         retval.append('vlong')
-    if threads <= 4 and mem > 8000:
+    if threads <= 6 and mem > 8000:
         retval.append('big')
-    if 4 <= threads <= 16 and mem > 8000:
+    if 8 <= threads <= 16 and mem > 8000:
         retval.append('big-multi')
     # Make sure we have at least one valid queue.
     assert len(retval)
