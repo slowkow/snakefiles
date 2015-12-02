@@ -16,37 +16,27 @@ Usage:
   	--snakefile kallisto.snakefile \
   	--configfile config.yml \
   	--jobs 999 \
-  	--cluster 'bsub -q normal -R "rusage[mem=4000]"'
+  	--cluster '../bsub.py -o stdout'
 '''
 
+import json
 from os.path import join, basename, dirname
 from subprocess import check_output
+from itertools import chain
 
 # Globals ---------------------------------------------------------------------
 
-# The config dictionary contains values defined in the JSON or YAML file
-# specified with 'snakemake --configfile'.
-
-# Run multi-threaded programs with this many threads.
-THREADS = config['THREADS']
+configfile: 'config.yml'
 
 # Full path to an uncompressed FASTA file with all chromosome sequences.
 CDNA = config['CDNA']
 
-# Full path to a folder that holds all of your FASTQ files.
-FASTQ_DIR = config['FASTQ_DIR']
-
 # Full path to a folder where intermediate output files will be created.
 OUT_DIR = config['OUT_DIR']
 
-# A snakemake regular expression matching the forward mate FASTQ files.
-# e.g. '{sample,[^/]+}.R1.fastq.gz'
-SAMPLES, = glob_wildcards(join(FASTQ_DIR, config['PATTERN_SAMPLES']))
-
-# Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
-# e.g. '{sample}.R1.fastq.gz'
-PATTERN_R1 = config['PATTERN_R1']
-PATTERN_R2 = config['PATTERN_R2']
+# Samples and their corresponding filenames.
+FILES = json.load(open(config['SAMPLES_JSON']))
+SAMPLES = sorted(FILES.keys())
 
 KALLISTO_VERSION = check_output("echo $(kallisto)", shell=True).split()[1]
 
@@ -62,7 +52,8 @@ def rstrip(text, suffix):
 
 rule all:
     input:
-        'abundance.tsv.gz'
+        'abundance.tsv.gz',
+        'n_processed.tsv.gz'
 
 rule kallisto_index:
     input:
@@ -88,25 +79,29 @@ rule kallisto_index:
 
 rule kallisto_quant:
     input:
-        r1 = join(FASTQ_DIR, PATTERN_R1),
-        r2 = join(FASTQ_DIR, PATTERN_R2),
+        r1 = lambda wildcards: FILES[wildcards.sample]['R1'],
+        r2 = lambda wildcards: FILES[wildcards.sample]['R2'],
         index = rules.kallisto_index.output.index
     output:
-        join(OUT_DIR, '{sample}/abundance.tsv')
+        join(OUT_DIR, '{sample}', 'abundance.tsv'),
+        join(OUT_DIR, '{sample}', 'run_info.json')
     version:
         KALLISTO_VERSION
     threads:
-        THREADS
-    shell:
-        'kallisto quant'
-        ' --threads={threads}'
-        ' --index={input.index}'
-        ' --output-dir=' + join(OUT_DIR, '{wildcards.sample}') +
-        ' {input.r1} {input.r2}'
+        4
+    resources:
+        mem = 4000
+    run:
+        fastqs = ' '.join(chain.from_iterable(zip(input.r1, input.r2)))
+        shell('kallisto quant'
+              ' --threads={threads}'
+              ' --index={input.index}'
+              ' --output-dir=' + join(OUT_DIR, '{wildcards.sample}') +
+              ' ' + fastqs)
 
 rule collate_kallisto:
     input:
-        expand(join(OUT_DIR, '{sample}/abundance.tsv'), sample=SAMPLES)
+        expand(join(OUT_DIR, '{sample}', 'abundance.tsv'), sample=SAMPLES)
     output:
         'abundance.tsv.gz'
     run:
@@ -127,5 +122,27 @@ rule collate_kallisto:
                 # Skip the header in each file.
                 lines.readline()
                 for line in lines:
-                    out.write(b(sample + '\t' + line))
+                    # Skip transcripts with 0 TPM.
+                    fields = line.strip().split('\t')
+                    if float(fields[4]) > 0:
+                        out.write(b(sample + '\t' + line))
+
+rule n_processed:
+    input:
+        expand(join(OUT_DIR, '{sample}', 'run_info.json'), sample=SAMPLES)
+    output:
+        'n_processed.tsv.gz'
+    run:
+        import json
+        import gzip
+
+        b = lambda x: bytes(x, 'UTF8')
+
+        with gzip.open(output[0], 'wb') as out:
+            out.write(b('sample\tn_processed\n'))
+
+            for f in input:
+                sample = basename(dirname(f))
+                n = json.load(open(f)).get('n_processed')
+                out.write(b('{}\t{}\n'.format(sample, n)))
 

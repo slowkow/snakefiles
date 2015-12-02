@@ -1,0 +1,20 @@
+{
+    "Sample1": {
+        "R1": [
+            "/data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R1.fastq.gz"
+        ],
+        "R2": [
+            "/data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R2.fastq.gz"
+        ]
+    },
+    "Sample2": {
+        "R1": [
+            "/data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L1.R1.fastq.gz",
+            "/data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L2.R1.fastq.gz"
+        ],
+        "R2": [
+            "/data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L1.R2.fastq.gz",
+            "/data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L2.R2.fastq.gz"
+        ]
+    }
+}

@@ -1,9 +1,9 @@
 '''
-star_express.snakefile
+star.snakefile
 Kamil Slowikowski
 
-Map paired-end RNA-seq reads with STAR and quantify transcripts with eXpress
-----------------------------------------------------------------------------
+Map paired-end RNA-seq reads and count genes with STAR
+------------------------------------------------------
 
 Requirements:
 
@@ -13,19 +13,9 @@ Requirements:
   STAR
       https://github.com/alexdobin/STAR/releases
 
-  gffread
-      https://cole-trapnell-lab.github.io/cufflinks/install/
-
-  express
-      http://bio.math.berkeley.edu/eXpress/
-
 Usage: 
 
-  snakemake \
-  	--snakefile star_express.snakefile \
-  	--configfile config.yml \
-  	--jobs 999 \
-  	--cluster 'bsub -q big-multi -n 16 -R "rusage[mem=35000]"'
+  snakemake --jobs 999 --cluster '../bsub.py -o stdout'
 '''
 
 from os.path import join, basename, dirname
@@ -33,8 +23,7 @@ from subprocess import check_output
 
 # Globals ---------------------------------------------------------------------
 
-# The config dictionary contains values defined in the JSON or YAML file
-# specified with 'snakemake --configfile'.
+configfile: 'config.yml'
 
 # Full path to an uncompressed FASTA file with all chromosome sequences.
 DNA = config['DNA']
@@ -42,26 +31,14 @@ DNA = config['DNA']
 # Full path to an uncompressed GTF file with all gene annotations.
 GTF = config['GTF']
 
-# Full path to a folder that holds all of your FASTQ files.
-FASTQ_DIR = config['FASTQ_DIR']
-
 # Full path to a folder where intermediate output files will be created.
 OUT_DIR = config['OUT_DIR']
 
-# A snakemake regular expression matching the forward mate FASTQ files.
-# e.g. '{sample,[^/]+}.R1.fastq.gz'
-SAMPLES, = glob_wildcards(join(FASTQ_DIR, config['PATTERN_SAMPLES']))
-
-# Patterns for the 1st mate and the 2nd mate using the 'sample' wildcard.
-# e.g. '{sample}.R1.fastq.gz'
-PATTERN_R1 = config['PATTERN_R1']
-PATTERN_R2 = config['PATTERN_R2']
+# Samples and their corresponding filenames.
+FILES = json.load(open(config['SAMPLES_JSON']))
+SAMPLES = sorted(FILES.keys())
 
 STAR_VERSION = check_output('STAR | grep versionSTAR', shell=True).split()[1]
-
-GFFREAD_VERSION = check_output('md5sum $(which gffread)', shell=True)
-
-EXPRESS_VERSION = check_output('echo $(express 2>&1 | grep "express v")', shell=True).split()[1]
 
 # Functions -------------------------------------------------------------------
 
@@ -76,32 +53,7 @@ def rstrip(text, suffix):
 rule all:
     input:
         'counts.tsv.gz',
-        'junctions.tsv.gz',
-        'express.tsv.gz'
-
-# Make a CDNA file from the given GTF and DNA files.
-rule make_cdna:
-    input:
-        dna = DNA,
-        gtf = GTF
-    output:
-        cdna = join(dirname(DNA), 'gffread',
-                    rstrip(DNA, '.fa') + '.gffread_transcripts.fa'),
-        faidx = DNA + '.fai'
-    log:
-        join(dirname(DNA), 'gffread', 'gffread.log')
-    benchmark:
-        join(dirname(DNA), 'gffread', 'gffread.benchmark.tsv')
-    version:
-        GFFREAD_VERSION
-    run:
-        # Create a FASTA index file for gffread.
-        shell('samtools faidx {input.dna}')
-        # Extract a sequence for each transcript in the GTF file.
-        cmd = 'gffread -F -w {output.cdna} -g {input.dna} {input.gtf}'
-        # Log the command and its output.
-        shell('echo ' + cmd + ' > {log}')
-        shell(cmd + ' >> {log} 2>&1')
+        'junctions.tsv.gz'
 
 # Make an index of the genome for STAR.
 rule star_index:
@@ -117,8 +69,8 @@ rule star_index:
         STAR_VERSION
     threads:
         16
-    params:
-        mem = '40000'
+    resources:
+        mem = 40000
     run:
         # Write stderr and stdout to the log file.
         shell('STAR'
@@ -128,13 +80,73 @@ rule star_index:
               ' --genomeFastaFiles {input.dna}'
               ' > {log} 2>&1')
 
+# Merge multiple FASTQ files that correspond to a single sample.
+# Also, ensure that the merged FASTQ has correctly paired mates.
+# Unpaired mates are excluded from the merged FASTQ.
+rule merge_fastqs:
+    input:
+        r1 = lambda wildcards: FILES[wildcards.sample]['R1'],
+        r2 = lambda wildcards: FILES[wildcards.sample]['R2']
+    output:
+        r1 = join(OUT_DIR, '{sample}', '{sample}_R1.fastq.gz'),
+        r2 = join(OUT_DIR, '{sample}', '{sample}_R2.fastq.gz')
+    run:
+        import gzip
+        # Open the output file handles.
+        out1 = gzip.open(output.r1, 'wb')
+        out2 = gzip.open(output.r2, 'wb')
+        # Yield a tuple for each read in the FASTQ file.
+        def fastq_records(filename):
+            with gzip.open(filename) as f:
+                while True:
+                    try:
+                        name = f.readline()
+                    except:
+                        break
+                    seq = f.readline()
+                    sep = f.readline()
+                    qual = f.readline()
+                    yield (name.split()[0], name + seq + sep + qual)
+        # Loop through all (R1,R2) pairs.
+        for i in range(len(input.r1)):
+            in1 = fastq_records(input.r1[i])
+            in2 = fastq_records(input.r2[i])
+            d1 = {}
+            d2 = {}
+            done1 = False
+            done2 = False
+            while not done1 or not done2:
+                try:
+                    n1, r1 = next(in1)
+                    d1[n1] = r1
+                except:
+                    done1 = True
+                try:
+                    n2, r2 = next(in2)
+                    d2[n2] = r2
+                except:
+                    done2 = True
+                if not done1 and n1 in d2:
+                    out1.write(d1[n1])
+                    out2.write(d2[n1])
+                    d1.pop(n1)
+                    d2.pop(n1)
+                if not done2 and n2 in d1:
+                    out1.write(d1[n2])
+                    out2.write(d2[n2])
+                    d1.pop(n2)
+                    d2.pop(n2)
+        # Close the output file handles.
+        out1.close()
+        out2.close()
+
 # 1. Map paired-end RNA-seq reads to the genome.
 # 2. Count the number of reads supporting each splice junction.
 # 3. Delete the output SAM file.
 rule star_pass1:
     input:
-        r1 = join(FASTQ_DIR, PATTERN_R1),
-        r2 = join(FASTQ_DIR, PATTERN_R2),
+        r1 = rules.merge_fastqs.output.r1,
+        r2 = rules.merge_fastqs.output.r2,
         genomeDir = dirname(rules.star_index.output.index),
         gtf = GTF
     output:
@@ -148,8 +160,8 @@ rule star_pass1:
         STAR_VERSION
     threads:
         4
-    params:
-        mem = '40000'
+    resources:
+        mem = 40000
     run:
         # Map reads with STAR.
         shell('cd ' + join(OUT_DIR, '{wildcards.sample}', 'pass1') +
@@ -182,23 +194,32 @@ rule star_pass1:
               ' --alignMatesGapMax 1000000'
               ' > {log} 2>&1')
 
+rule merge_splice_junctions:
+    input:
+        sjs = expand(join(OUT_DIR, '{sample}', 'pass1', 'SJ.out.tab'), sample = SAMPLES)
+    output:
+        sjs = join(OUT_DIR, 'SJ.out.pass1_merged.tab')
+    log:
+        join(OUT_DIR, 'merge_splice_junctions.log')
+    shell:
+        # Retain splice junctions with at least 3 uniquely mapped fragments
+        # per sample.
+        "cat {input.sjs} | awk '$7 >= 3' | cut -f1-4 | sort -u > {output.sjs}"
+
 # 1. Map paired-end RNA-seq reads to the genome.
 # 2. Make a coordinate sorted BAM with genomic coordinates.
-# 3. Make a second BAM with coordinates relative to transcripts.
-# 4. Count the number of reads mapped to each gene.
-# 5. Count the number of reads supporting each splice junction.
+# 3. Count the number of reads mapped to each gene.
+# 4. Count the number of reads supporting each splice junction.
 rule star_pass2:
     input:
-        r1 = join(FASTQ_DIR, PATTERN_R1),
-        r2 = join(FASTQ_DIR, PATTERN_R2),
+        r1 = rules.merge_fastqs.output.r1,
+        r2 = rules.merge_fastqs.output.r2,
         genomeDir = dirname(rules.star_index.output.index),
         gtf = GTF,
-        sjs = expand(join(OUT_DIR, '{sample}', 'pass1', 'SJ.out.tab'), sample = SAMPLES)
+        sjs = rules.merge_splice_junctions.output.sjs
     output:
         sam = temp(join(OUT_DIR, '{sample}', 'pass2', 'Aligned.out.sam')),
         bam = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.out.bam'),
-        t_bam = temp(join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.bam')),
-        t_bam_sorted = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.sorted.bam'),
         counts = join(OUT_DIR, '{sample}', 'pass2', 'ReadsPerGene.out.tab'),
         sj = join(OUT_DIR, '{sample}', 'pass2', 'SJ.out.tab')
     log:
@@ -209,8 +230,8 @@ rule star_pass2:
         STAR_VERSION
     threads:
         4
-    params:
-        mem = '40000'
+    resources:
+        mem = 40000
     run:
         # Map reads with STAR.
         shell('cd ' + join(OUT_DIR, '{wildcards.sample}', 'pass2') +
@@ -223,11 +244,8 @@ rule star_pass2:
               # Multi-sample 2-pass alignment, sharing splice junctions across
               # samples.
               ' --sjdbFileChrStartEnd {input.sjs}'
-              # BAM file in transcript coords, in addition to genomic BAM file.
-              ' --quantMode TranscriptomeSAM GeneCounts'
-              # Allow insertions, deletions and soft-clips in the transcriptomic
-              # alignments, which can be used by eXpress.
-              ' --quantTranscriptomeBan Singleend'
+              # Count fragments per gene, similar to HTseq.
+              ' --quantMode GeneCounts'
               # By default, this prefix is "./".
               ' --outFileNamePrefix ' + join(OUT_DIR, '{wildcards.sample}', 'pass2') + '/'
               #
@@ -253,61 +271,6 @@ rule star_pass2:
         # Convert to BAM and sort by coordinate.
         shell('samtools view -b {output.sam}'
               ' | samtools sort -@{threads} -l9 - ' + rstrip(output.bam, '.bam'))
-        # Sort by read name for eXpress.
-        shell('samtools sort -@{threads} -l9 -n'
-              ' -o {output.t_bam_sorted}'
-              ' -O bam'
-              ' -T ' + rstrip(output.t_bam, '.bam') +
-              ' {output.t_bam}')
-
-# Compute transcripts per million (TPM) with eXpress.
-rule express:
-    input:
-        bam = rules.star_pass2.output.t_bam_sorted,
-        cdna = rules.make_cdna.output.cdna
-    output:
-        results = join(OUT_DIR, '{sample}', 'pass2', 'results.xprs')
-    log:
-        join(OUT_DIR, '{sample}', 'pass2', 'express.log')
-    benchmark:
-        join(OUT_DIR, '{sample}', 'pass2', 'express.benchmark.tsv')
-    version:
-        EXPRESS_VERSION 
-    params:
-        mem = '4000'
-    run:
-        shell('express'
-              ' --no-update-check'
-              ' --no-bias-correct'
-              ' --logtostderr'
-              ' --output-dir ' + join(OUT_DIR, '{wildcards.sample}', 'pass2') +
-              ' {input.cdna} {input.bam}'
-              ' > {log} 2>&1')
-
-rule collate_express:
-    input:
-        expand(join(OUT_DIR, '{sample}', 'pass2', 'results.xprs'), sample = SAMPLES)
-    output:
-        'express.tsv.gz'
-    run:
-        import gzip
-
-        b = lambda x: bytes(x, 'UTF8')
-
-        # Create the output file.
-        with gzip.open(output[0], 'wb') as out:
-
-            # Print the header.
-            header = open(input[0]).readline()
-            out.write(b('sample\t' + header))
-
-            for i in input:
-                sample = basename(dirname(dirname(i)))
-                lines = open(i)
-                # Skip the header in each file.
-                lines.readline()
-                for line in lines:
-                    out.write(b(sample + '\t' + line))
 
 rule collate_counts:
     input:
@@ -330,7 +293,10 @@ rule collate_counts:
             for i in input:
                 sample = basename(dirname(dirname(i)))
                 for line in open(i):
-                    out.write(b(sample + '\t' + line))
+                    fields = line.strip().split()
+                    # Skip genes with 0 counts.
+                    if int(fields[1]) > 0:
+                        out.write(b(sample + '\t' + line))
 
 rule collate_junctions:
     input:
@@ -354,5 +320,9 @@ rule collate_junctions:
             for i in input:
                 sample = basename(dirname(dirname(i)))
                 for line in open(i):
-                    out.write(b(sample + '\t' + line))
+                    fields = line.strip().split()
+                    # Skip splice junctions with 0 unique and 0 multimapped
+                    # reads.
+                    if int(fields[6]) > 0 or int(fields[7]) > 0:
+                        out.write(b(sample + '\t' + line))
 

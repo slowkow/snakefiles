@@ -1,25 +1,11 @@
-# Run multi-threaded programs with this many threads.
-THREADS: 1
-
 # Path to an uncompressed FASTA file with all chromosome sequences.
 DNA: '/data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.dna.primary_assembly.fa'
-
-# Path to an uncompressed FASTA file with all transcript sequences.
-CDNA: '/data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.cdna.all.fa'
 
 # Path to an uncompressed GTF file with all gene annotations.
 GTF: '/data/srlab/slowikow/src/snakefiles/data/ensembl/Homo_sapiens.GRCh38.82.gtf'
 
-# Path to a folder that holds FASTQ files.
-FASTQ_DIR: '/data/srlab/slowikow/src/snakefiles/data/fastq'
-
 # Path to a folder where intermediate files will be written.
 OUT_DIR: '/data/srlab/slowikow/src/snakefiles/star'
 
-# A snakemake regular expression matching the forward mate FASTQ files.
-PATTERN_SAMPLES: '{sample,Samp[^/]+}.R1.fastq.gz'
-
-# A pattern for the 1st mate and the 2nd mate using the 'sample' wildcard.
-PATTERN_R1: '{sample}.R1.fastq.gz'
-PATTERN_R2: '{sample}.R2.fastq.gz'
-
+# Path to a JSON file with samples and their corresponding FASTQ files.
+SAMPLES_JSON: '../samples.json'

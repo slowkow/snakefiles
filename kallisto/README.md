@@ -8,12 +8,7 @@ Quantify gene isoform expression in transcripts per million (TPM) with
 ## View the job graph
 
 ```bash
-snakemake \
-  --snakefile kallisto.snakefile \
-  --configfile config.yml \
-  --forceall \
-  --dag \
-  | dot -Tpng > dag.png
+snakemake --forceall --dag | dot -Tpng > dag.png
 ```
 
 ![Snakemake directed acyclic graph (DAG).][dag]
@@ -28,11 +23,7 @@ to launch jobs on an [LSF] cluster.
 [LSF]: https://en.wikipedia.org/wiki/Platform_LSF
 
 ```bash
-snakemake \
-  --snakefile kallisto.snakefile \
-  --configfile config.yml \
-  --jobs 999 \
-  --cluster 'bsub -q normal -R "rusage[mem=4000]"'
+snakemake --jobs 999 --cluster '../bsub.py -o stdout'
 ```
 
 ## Output

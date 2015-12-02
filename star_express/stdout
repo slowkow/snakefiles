@@ -1,0 +1,360 @@
+Sender: LSF System <lsfadmin@cn044>
+Subject: Job 142439: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_fastqs.1.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_fastqs.1.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn044>, in queue <vlong>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:13:02 2015
+Results reported at Wed Dec  2 14:13:05 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_fastqs.1.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      1.66 sec.
+    Max Memory :         5 MB
+    Max Swap   :        30 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn010>
+Subject: Job 142438: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_fastqs.0.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_fastqs.0.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn010>, in queue <vlong>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:13:02 2015
+Results reported at Wed Dec  2 14:13:05 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_fastqs.0.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      1.83 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn010>
+Subject: Job 142441: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass1.2.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass1.2.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <4*cn010>, in queue <big>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:13:13 2015
+Results reported at Wed Dec  2 14:18:32 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass1.2.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :    525.65 sec.
+    Max Memory :     31914 MB
+    Max Swap   :     32694 MB
+
+    Max Processes  :        11
+    Max Threads    :        17
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn044>
+Subject: Job 142443: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass1.3.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass1.3.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <4*cn044>, in queue <big>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:13:13 2015
+Results reported at Wed Dec  2 14:18:34 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass1.3.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :    535.03 sec.
+    Max Memory :     31914 MB
+    Max Swap   :     32693 MB
+
+    Max Processes  :        11
+    Max Threads    :        17
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn045>
+Subject: Job 142508: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_splice_junctions.4.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_splice_junctions.4.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn045>, in queue <vlong>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:18:40 2015
+Results reported at Wed Dec  2 14:18:42 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.merge_splice_junctions.4.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      0.70 sec.
+    Max Memory :         4 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn045>
+Subject: Job 142510: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass2.5.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass2.5.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <4*cn045>, in queue <big>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:18:46 2015
+Results reported at Wed Dec  2 14:23:38 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass2.5.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :    522.31 sec.
+    Max Memory :     31915 MB
+    Max Swap   :     34815 MB
+
+    Max Processes  :        11
+    Max Threads    :        17
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn002>
+Subject: Job 142511: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass2.6.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass2.6.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <4*cn002>, in queue <big>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:18:46 2015
+Results reported at Wed Dec  2 14:23:47 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.star_pass2.6.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :    527.16 sec.
+    Max Memory :     31914 MB
+    Max Swap   :     34816 MB
+
+    Max Processes  :        11
+    Max Threads    :        17
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn001>
+Subject: Job 142629: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_junctions.8.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_junctions.8.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn001>, in queue <vlong>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:23:57 2015
+Results reported at Wed Dec  2 14:23:59 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_junctions.8.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      0.72 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn003>
+Subject: Job 142631: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_counts.9.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_counts.9.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn003>, in queue <vlong>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:23:57 2015
+Results reported at Wed Dec  2 14:23:59 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_counts.9.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      0.89 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn010>
+Subject: Job 142627: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.express.7.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.express.7.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn010>, in queue <medium>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:23:45 2015
+Results reported at Wed Dec  2 14:24:05 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.express.7.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :     19.09 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn044>
+Subject: Job 142632: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.express.10.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.express.10.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn044>, in queue <medium>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:23:51 2015
+Results reported at Wed Dec  2 14:24:10 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.express.10.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :     18.88 sec.
+    Max Memory :         5 MB
+    Max Swap   :        30 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn001>
+Subject: Job 142637: </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_express.11.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_express.11.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn001>, in queue <vlong>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/star_express> was used as the working directory.
+Started at Wed Dec  2 14:24:19 2015
+Results reported at Wed Dec  2 14:24:21 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/star_express/.snakemake/tmp.DK42PV/snakejob.collate_express.11.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      1.71 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+

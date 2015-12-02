@@ -9,12 +9,7 @@ Collate outputs from multiple samples.
 ## View the job graph
 
 ```bash
-snakemake \
-  --snakefile star.snakefile \
-  --configfile config.yml \
-  --forceall \
-  --dag \
-  | dot -Tpng > dag.png
+snakemake --forceall --dag | dot -Tpng > dag.png
 ```
 
 ![Snakemake directed acyclic graph (DAG).][dag]
@@ -29,11 +24,7 @@ to launch jobs on an [LSF] cluster.
 [LSF]: https://en.wikipedia.org/wiki/Platform_LSF
 
 ```bash
-snakemake \
-  --snakefile star.snakefile \
-  --configfile config.yml \
-  --jobs 999 \
-  --cluster 'bsub -q big-multi -n 16 -R "rusage[mem=35000]"'
+snakemake --jobs 999 --cluster '../bsub.py -o stdout'
 ```
 
 ## Output

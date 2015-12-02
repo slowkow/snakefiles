@@ -11,12 +11,7 @@ transcripts in TPM with [eXpress]. Collate outputs from multiple samples.
 ## View the job graph
 
 ```bash
-snakemake \
-  --snakefile star_express.snakefile \
-  --configfile config.yml \
-  --forceall \
-  --dag \
-  | dot -Tpng > dag.png
+snakemake --forceall --dag | dot -Tpng > dag.png
 ```
 
 ![Snakemake directed acyclic graph (DAG).][dag]
@@ -31,11 +26,7 @@ to launch jobs on an [LSF] cluster.
 [LSF]: https://en.wikipedia.org/wiki/Platform_LSF
 
 ```bash
-snakemake \
-  --snakefile star_express.snakefile \
-  --configfile config.yml \
-  --jobs 999 \
-  --cluster ../bsub.py
+snakemake --jobs 999 --cluster '../bsub.py -o stdout'
 ```
 
 ## Output

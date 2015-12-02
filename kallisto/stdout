@@ -1,0 +1,152 @@
+Sender: LSF System <lsfadmin@cn010>
+Subject: Job 137872: </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.kallisto_quant.0.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.kallisto_quant.0.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <4*cn010>, in queue <medium>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/kallisto> was used as the working directory.
+Started at Wed Dec  2 10:33:00 2015
+Results reported at Wed Dec  2 10:33:16 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.kallisto_quant.0.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :     14.32 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+
+[quant] fragment length distribution will be estimated from the data
+[index] k-mer length: 21
+[index] number of targets: 175,372
+[index] number of k-mers: 101,091,365
+[index] number of equivalence classes: 903,634
+[quant] running in paired-end mode
+[quant] will process pair 1: /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L1.R1.fastq.gz
+                             /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L1.R2.fastq.gz
+[quant] will process pair 2: /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L2.R1.fastq.gz
+                             /data/srlab/slowikow/src/snakefiles/data/fastq/Sample2.L2.R2.fastq.gz
+[quant] finding pseudoalignments for the reads ... done
+[quant] processed 4,500 reads, 2,796 reads pseudoaligned
+[quant] estimated average fragment length: 168.44
+[   em] quantifying the abundances ... done
+[   em] the Expectation-Maximization algorithm ran for 515 rounds
+
+Sender: LSF System <lsfadmin@cn045>
+Subject: Job 137873: </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.kallisto_quant.1.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.kallisto_quant.1.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <4*cn045>, in queue <normal>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/kallisto> was used as the working directory.
+Started at Wed Dec  2 10:33:00 2015
+Results reported at Wed Dec  2 10:33:17 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.kallisto_quant.1.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :     15.19 sec.
+    Max Memory :         4 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+
+[quant] fragment length distribution will be estimated from the data
+[index] k-mer length: 21
+[index] number of targets: 175,372
+[index] number of k-mers: 101,091,365
+[index] number of equivalence classes: 903,634
+[quant] running in paired-end mode
+[quant] will process pair 1: /data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R1.fastq.gz
+                             /data/srlab/slowikow/src/snakefiles/data/fastq/Sample1.R2.fastq.gz
+[quant] finding pseudoalignments for the reads ... done
+[quant] processed 5,000 reads, 2,859 reads pseudoaligned
+[quant] estimated average fragment length: 156.148
+[   em] quantifying the abundances ... done
+[   em] the Expectation-Maximization algorithm ran for 470 rounds
+
+Sender: LSF System <lsfadmin@cn003>
+Subject: Job 137875: </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.n_processed.3.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.n_processed.3.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn003>, in queue <medium>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/kallisto> was used as the working directory.
+Started at Wed Dec  2 10:33:22 2015
+Results reported at Wed Dec  2 10:33:24 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.n_processed.3.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      0.57 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
+Sender: LSF System <lsfadmin@cn001>
+Subject: Job 137874: </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.collate_kallisto.2.sh> Done
+
+Job </data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.collate_kallisto.2.sh> was submitted from host <rgs08> by user <ks38> in cluster <cmucluster>.
+Job was executed on host(s) <cn001>, in queue <medium>, as user <ks38> in cluster <cmucluster>.
+</PHShome/ks38> was used as the home directory.
+</PHShome/ks38/src/snakefiles/kallisto> was used as the working directory.
+Started at Wed Dec  2 10:33:22 2015
+Results reported at Wed Dec  2 10:33:24 2015
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+/data/srlab/slowikow/src/snakefiles/kallisto/.snakemake/tmp.7T9CGS/snakejob.collate_kallisto.2.sh
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time   :      1.19 sec.
+    Max Memory :         3 MB
+    Max Swap   :        31 MB
+
+    Max Processes  :         1
+    Max Threads    :         1
+
+The output (if any) follows:
+
