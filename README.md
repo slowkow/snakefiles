@@ -56,15 +56,6 @@ Quantify gene isoform expression in transcripts per million (TPM) with
 [kallisto] and collate outputs from multiple samples into one file.
 
 
-### [star/][2]
-
-[2]: https://github.com/slowkow/snakefiles/tree/master/star
-
-Execute a multi-sample 2-pass [STAR] alignment, sharing the splice junctions
-across samples. Count fragments per gene and fragments per splice site.
-Collate outputs from multiple samples.
-
-
 ### [star_express/][3]
 
 [3]: https://github.com/slowkow/snakefiles/tree/master/star_express
