@@ -1,4 +1,4 @@
-# kallisto.snakefile
+# kallisto
 
 Quantify gene isoform expression in transcripts per million (TPM) with
 [kallisto] and collate outputs from multiple samples into one file.
@@ -17,10 +17,13 @@ snakemake --forceall --dag | dot -Tpng > dag.png
 
 ## Run the Snakefile
 
-You can run snakemake like this. Notice the `--cluster 'bsub ...` option, used
-to launch jobs on an [LSF] cluster.
+You can run snakemake like this. Notice the `--cluster` option, used to launch
+jobs on an [LSF] cluster. The Python script [bsub.py][bsub] receives job
+scripts from Snakemake and automatically submits them to an appropriate LSF
+queue based on job requirements.
 
 [LSF]: https://en.wikipedia.org/wiki/Platform_LSF
+[bsub]: https://github.com/slowkow/snakefiles/tree/master/bsub.py
 
 ```bash
 snakemake --jobs 999 --cluster '../bsub.py -o stdout'
@@ -36,32 +39,23 @@ zcat abundance.tsv.gz | head | column -t
 
 ```
 sample   target_id        length  eff_length  est_counts  tpm
-Sample2  ENST00000415118  8       9           0           0
-Sample2  ENST00000448914  13      14          0           0
-Sample2  ENST00000631435  12      13          0           0
-Sample2  ENST00000434970  9       10          0           0
-Sample2  ENST00000632684  12      13          0           0
-Sample2  ENST00000431440  16      17          0           0
-Sample2  ENST00000454691  18      19          0           0
-Sample2  ENST00000451044  17      18          0           0
-Sample2  ENST00000390581  23      24          0           0
-
+Sample1  ENST00000390469  520     367.098     1           980.612
+Sample1  ENST00000453496  2469    2313.85     1           155.576
+Sample1  ENST00000620987  945     789.852     1.68005     765.696
+Sample1  ENST00000614992  948     792.852     1.67574     760.841
+Sample1  ENST00000633705  760     604.852     4.64421     2764.03
+Sample1  ENST00000436911  1013    857.852     1           419.631
+Sample1  ENST00000390290  400     252.302     1           1426.78
+Sample1  ENST00000633188  51      8.05        0.5         22359.1
+Sample1  ENST00000390413  51      8.05        0.5         22359.1
 ```
 
 ```bash
-zcat abundance.tsv.gz | tail
+zcat n_processed.tsv.gz
 ```
 
 ```
-Sample1 ENST00000625481 1490    1334.85 0       0
-Sample1 ENST00000631636 474     321.098 0       0
-Sample1 ENST00000633023 398     250.721 0       0
-Sample1 ENST00000632698 452     300.12  0       0
-Sample1 ENST00000631664 178     69.0117 0       0
-Sample1 ENST00000627692 927     771.852 0       0
-Sample1 ENST00000631343 1490    1334.85 0       0
-Sample1 ENST00000633652 508     355.098 0       0
-Sample1 ENST00000634119 1226    1070.85 0       0
-Sample1 ENST00000631874 147     49.842  0       0
+sample  n_processed
+Sample1 5000
+Sample2 4500
 ```
-
