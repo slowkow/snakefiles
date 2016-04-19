@@ -99,18 +99,18 @@ def get_queue(threads, mem, runtime):
     # Find valid queues for this job's requirements.
     retval = []
     # Only consider 'vshort' if we specify a nonzero runtime.
-    if threads == 1 and mem < 1000 and 0 < runtime < 15:
+    if threads == 1 and mem <= 1000 and 0 < runtime <= 15:
         retval.append('vshort')
     # The other queues are all ok if we leave runtime=0.
-    if threads == 1 and mem < 4000 and runtime < 60:
+    if threads == 1 and mem <= 4000 and runtime <= 60:
         retval.append('short')
-    if threads <= 4 and mem < 8000 and runtime < 60 * 24:
+    if threads <= 4 and mem <= 8000 and runtime <= 60 * 24:
         retval.append('medium')
-    if threads <= 6 and mem < 8000 and runtime < 60 * 24 * 3:
+    if threads <= 6 and mem <= 8000 and runtime <= 60 * 24 * 3:
         retval.append('normal')
-    if threads <= 4 and mem < 8000 and runtime < 60 * 24 * 7:
+    if threads <= 4 and mem <= 8000 and runtime <= 60 * 24 * 7:
         retval.append('long')
-    if threads <= 4 and mem < 4000 and runtime < 60 * 24 * 7 * 4:
+    if threads <= 4 and mem <= 4000 and runtime <= 60 * 24 * 7 * 4:
         retval.append('vlong')
     if threads <= 6 and mem > 8000:
         retval.append('big')
