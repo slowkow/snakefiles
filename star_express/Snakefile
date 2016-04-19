@@ -24,7 +24,9 @@ Usage:
   snakemake --jobs 999 --cluster '../bsub.py -o stdout'
 '''
 
+import json
 from os.path import join, basename, dirname
+from os import getcwd
 from subprocess import check_output
 
 # Globals ---------------------------------------------------------------------
@@ -49,6 +51,8 @@ STAR_VERSION = check_output('STAR | grep versionSTAR', shell=True).split()[1]
 GFFREAD_VERSION = check_output('md5sum $(which gffread)', shell=True)
 
 EXPRESS_VERSION = check_output('echo $(express 2>&1 | grep "express v")', shell=True).split()[1]
+
+SAMTOOLS_VERSION = check_output('echo $(samtools --version | grep samtools)', shell=True).split()[1]
 
 # Functions -------------------------------------------------------------------
 
@@ -182,7 +186,7 @@ rule star_pass1:
     input:
         r1 = rules.merge_fastqs.output.r1,
         r2 = rules.merge_fastqs.output.r2,
-        genomeDir = dirname(rules.star_index.output.index),
+        index = rules.star_index.output.index,
         gtf = GTF
     output:
         sam = temp(join(OUT_DIR, '{sample}', 'pass1', 'Aligned.out.sam')),
@@ -202,7 +206,7 @@ rule star_pass1:
         shell('cd ' + join(OUT_DIR, '{wildcards.sample}', 'pass1') +
               '&& STAR'
               ' --runThreadN {threads}'
-              ' --genomeDir ' + join(dirname(DNA), 'star') +
+              ' --genomeDir ' + dirname(input.index) +
               ' --sjdbGTFfile {input.gtf}'
               ' --readFilesCommand zcat'
               ' --readFilesIn {input.r1} {input.r2}'
@@ -242,22 +246,20 @@ rule merge_splice_junctions:
         "cat {input.sjs} | awk '$7 >= 3' | cut -f1-4 | sort -u > {output.sjs}"
 
 # 1. Map paired-end RNA-seq reads to the genome.
-# 2. Make a coordinate sorted BAM with genomic coordinates.
-# 3. Make a second BAM with coordinates relative to transcripts.
+# 2. Make a SAM with genomic coordinates.
+# 3. Make a BAM with coordinates relative to transcripts.
 # 4. Count the number of reads mapped to each gene.
 # 5. Count the number of reads supporting each splice junction.
 rule star_pass2:
     input:
         r1 = rules.merge_fastqs.output.r1,
         r2 = rules.merge_fastqs.output.r2,
-        genomeDir = dirname(rules.star_index.output.index),
+        index = rules.star_index.output.index,
         gtf = GTF,
         sjs = rules.merge_splice_junctions.output.sjs
     output:
-        sam = temp(join(OUT_DIR, '{sample}', 'pass2', 'Aligned.out.sam')),
-        bam = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.out.bam'),
-        t_bam = temp(join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.bam')),
-        t_bam_sorted = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.sorted.bam'),
+        sam = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.out.sam'),
+        t_bam = join(OUT_DIR, '{sample}', 'pass2', 'Aligned.toTranscriptome.out.bam'),
         counts = join(OUT_DIR, '{sample}', 'pass2', 'ReadsPerGene.out.tab'),
         sj = join(OUT_DIR, '{sample}', 'pass2', 'SJ.out.tab')
     log:
@@ -275,7 +277,7 @@ rule star_pass2:
         shell('cd ' + join(OUT_DIR, '{wildcards.sample}', 'pass2') +
               '&& STAR'
               ' --runThreadN {threads}'
-              ' --genomeDir ' + join(dirname(DNA), 'star') +
+              ' --genomeDir ' + dirname(input.index) +
               ' --sjdbGTFfile {input.gtf}'
               ' --readFilesCommand zcat'
               ' --readFilesIn {input.r1} {input.r2}'
@@ -309,20 +311,38 @@ rule star_pass2:
               # Maximum genomic distance between mates.
               ' --alignMatesGapMax 1000000'
               ' > {log} 2>&1')
-        # Convert to BAM and sort by coordinate.
-        shell('samtools view -b {output.sam}'
-              ' | samtools sort -@{threads} -l9 - ' + rstrip(output.bam, '.bam'))
+
+rule samtools_sort:
+    input:
+        sam = rules.star_pass2.output.sam,
+        t_bam = rules.star_pass2.output.t_bam
+    output:
+        bam = rstrip(rules.star_pass2.output.sam, '.sam') + '.bam',
+        t_bam_sorted = rstrip(rules.star_pass2.output.t_bam, '.bam') + '.sorted.bam'
+    benchmark:
+        join(dirname(rules.star_pass2.output.sam), 'samtools.sort.benchmark.tsv')
+    version:
+        SAMTOOLS_VERSION
+    threads:
+        4
+    resources:
+        mem = 8000
+    run:
+        shell('samtools view -b {input.sam}'
+              ' | samtools sort -@{threads} -l9 -'
+              ' -T ' + rstrip(input.sam, '.sam') +
+              ' -o {output.bam}')
         # Sort by read name for eXpress.
         shell('samtools sort -@{threads} -l9 -n'
               ' -o {output.t_bam_sorted}'
               ' -O bam'
-              ' -T ' + rstrip(output.t_bam, '.bam') +
-              ' {output.t_bam}')
+              ' -T ' + rstrip(input.t_bam, '.bam') +
+              ' {input.t_bam}')
 
 # Compute transcripts per million (TPM) with eXpress.
 rule express:
     input:
-        bam = rules.star_pass2.output.t_bam_sorted,
+        bam = rules.samtools_sort.output.t_bam_sorted,
         cdna = rules.make_cdna.output.cdna
     output:
         results = join(OUT_DIR, '{sample}', 'pass2', 'results.xprs')
