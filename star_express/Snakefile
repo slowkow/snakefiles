@@ -318,6 +318,7 @@ rule samtools_sort:
         t_bam = rules.star_pass2.output.t_bam
     output:
         bam = rstrip(rules.star_pass2.output.sam, '.sam') + '.bam',
+        bai = rstrip(rules.star_pass2.output.sam, '.sam') + '.bam.bai',
         t_bam_sorted = rstrip(rules.star_pass2.output.t_bam, '.bam') + '.sorted.bam'
     benchmark:
         join(dirname(rules.star_pass2.output.sam), 'samtools.sort.benchmark.tsv')
@@ -332,6 +333,7 @@ rule samtools_sort:
               ' | samtools sort -@{threads} -l9 -'
               ' -T ' + rstrip(input.sam, '.sam') +
               ' -o {output.bam}')
+        shell('samtools index {output.bam}')
         # Sort by read name for eXpress.
         shell('samtools sort -@{threads} -l9 -n'
               ' -o {output.t_bam_sorted}'
