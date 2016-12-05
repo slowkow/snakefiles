@@ -77,13 +77,6 @@ dedicated to the public domain.
 [issues]: https://github.com/slowkow/snakefiles/issues
 [pull]: https://help.github.com/articles/using-pull-requests/
 
-
-## License
-
-Unless stated otherwise, everything in this repository is dedicated to the
-public domain through the [Creative Commons Zero license][cc0].
-
-
 [kallisto]: https://github.com/pachterlab/kallisto
 [STAR]: https://github.com/alexdobin/STAR
 [eXpress]: http://bio.math.berkeley.edu/eXpress/overview.html
