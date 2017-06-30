@@ -10,6 +10,18 @@ If you are new to [Snakemake], you might like to start by walking through my
 [tutorial for beginners][beginners]. Next, have a look at Johannes Koster's
 [introductory slides][slides], [tutorial], [documentation], and [FAQ].
 
+Quick start:
+
+```bash
+# Copy the files
+git clone https://github.com/slowkow/snakefiles.git
+
+# Move to the kallisto directory
+cd snakefiles/kallisto
+
+# Run snakemake
+snakemake
+```
 
 ## Data
 
