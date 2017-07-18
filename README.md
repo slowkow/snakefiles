@@ -16,7 +16,7 @@ Quick start:
 # Copy the files
 git clone https://github.com/slowkow/snakefiles.git
 
-# Move to the kallisto directory
+# Go to the kallisto directory
 cd snakefiles/kallisto
 
 # Run snakemake
@@ -34,13 +34,13 @@ the usage of each of the RNA-seq workflows.
 - Sample2
     - `Sample2.L1.R1.fastq.gz`
     - `Sample2.L2.R1.fastq.gz`
-        - The first mate reads split across two files. Some software such as
-          STAR requires these reads to be merged into one file.
+        - The first mate reads (R1), split across two files (L1 and L2). Some
+          software such as STAR requires these reads to be merged into one file.
     - `Sample2.L1.R2.fastq.gz`
     - `Sample2.L2.R2.fastq.gz`
-        - Likewise, the second mate reads are also split across two files. To
-          make matters more complicated, the `Sample2.L2.R2.fastq.gz` has only
-          2,000 reads, whereas `Sample2.L2.R1.fastq.gz` has 2,500 reads. The
+        - Likewise, the second mate reads (R2) are also split across two files
+          (L1 and L2). To make matters worse, `Sample2.L2.R2.fastq.gz` has only
+          2000 reads, whereas `Sample2.L2.R1.fastq.gz` has 2500 reads. The
           Snakefiles in this repository can handle this without any problems.
 
 [fastq]: https://github.com/slowkow/snakefiles/tree/master/data/fastq
@@ -83,8 +83,7 @@ transcripts in TPM with [eXpress]. Collate outputs from multiple samples.
 Please [submit an issue][issues] to report bugs or ask questions.
 
 Please contribute bug fixes or new features with a [pull request][pull] to
-this repository. Note that your contribution to this repository will be
-dedicated to the public domain.
+this repository.
 
 [issues]: https://github.com/slowkow/snakefiles/issues
 [pull]: https://help.github.com/articles/using-pull-requests/
